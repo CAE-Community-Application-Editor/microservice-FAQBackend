@@ -99,7 +99,7 @@ public class FAQ extends RESTService {
    * 
    */
   @GET
-  @Path("//")
+  @Path("/")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.TEXT_PLAIN)
   @ApiResponses(value = {
@@ -127,7 +127,7 @@ public class FAQ extends RESTService {
    * 
    */
   @POST
-  @Path("//")
+  @Path("/")
   @Produces(MediaType.TEXT_PLAIN)
   @Consumes(MediaType.TEXT_PLAIN)
   @ApiResponses(value = {

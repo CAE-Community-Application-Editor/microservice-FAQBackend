@@ -101,7 +101,7 @@ public class FAQTest {
     try {
       String req = "initialized";
       c.setLogin(Long.toString(testAgent.getId()), testPass);
-      ClientResponse result = c.sendRequest("GET", mainPath + "//", req,
+      ClientResponse result = c.sendRequest("GET", mainPath + "/", req,
         MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON, new HashMap<String,String>());
       assertTrue(true); // change here
       System.out.println("Result of 'testgetFAQS': " + result.getResponse().trim());
@@ -123,7 +123,7 @@ public class FAQTest {
     try {
       JSONObject data = new JSONObject();
       c.setLogin(Long.toString(testAgent.getId()), testPass);
-      ClientResponse result = c.sendRequest("POST", mainPath + "//", data.toJSONString(),
+      ClientResponse result = c.sendRequest("POST", mainPath + "/", data.toJSONString(),
         MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN, new HashMap<String,String>());
       assertTrue(true); // change here
       System.out.println("Result of 'testpostFAQ': " + result.getResponse().trim());
