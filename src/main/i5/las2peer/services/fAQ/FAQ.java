@@ -139,13 +139,31 @@ public class FAQ extends RESTService {
  
      
 
-    // okayResponse
-    boolean okayResponse_condition = true;
-    if(okayResponse_condition) {
-      String result = "Some String";
-      return Response.status(HttpURLConnection.HTTP_OK).entity(result).build();
+    try {  
+        JSONObject result = new JSONObject();
+        
+        if(question.length>1){
+            Connection conn = service.dbm.getConnection();
+            PreparedStatement stmnt = conn.prepareStatement("INSERT INTO faq  (question, answer, category) VALUES (?,?,?)");
+            stmnt.setString(1, data_JSON.question); 
+            stmnt.setString(2, data_JSON.answer); 
+            stmnt.setString(3, data_JSON.category);
+            stmnt.executeUpdate(); 
+            stmnt.close();
+            result.put("message", "successfully added Question"); 
+        }
+        return Response.status(HttpURLConnection.HTTP_OK).entity(result.toJSONString()).build();
+    } catch (Exception e) { 
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+        JSONObject result = new JSONObject();  
+        //exampleComment
+        result.put("error", e.toString()); 
+        result.put("args", data); 
+        result.put("trace", sw.toString());
+        return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(result.toJSONString()).build();
     }
-    return null;
   }
 
 
