@@ -109,7 +109,7 @@ public class FAQ extends RESTService {
   public Response getFAQS(String req) {
     try {
         Connection conn = service.dbm.getConnection();
-        PreparedStatement stmnt = conn.prepareStatement("SELECT id, question,answer, category FROM faqs");
+        PreparedStatement stmnt = conn.prepareStatement("SELECT id, question,answer, category FROM faq");
         ResultSet rs = stmnt.executeQuery(); 
         JSONArray result = new JSONArray();
         while (rs.next()) { 
