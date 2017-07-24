@@ -107,14 +107,30 @@ public class FAQ extends RESTService {
   })
   @ApiOperation(value = "getFAQS", notes = " ")
   public Response getFAQS(String req) {
-
-    // okayResponse
-    boolean okayResponse_condition = true;
-    if(okayResponse_condition) {
-      JSONObject result = new JSONObject();
-      return Response.status(HttpURLConnection.HTTP_OK).entity(result.toJSONString()).build();
+    try {
+        Connection conn = service.dbm.getConnection();
+        PreparedStatement stmnt = conn.prepareStatement("SELECT id, question,answer, category FROM faq");
+        ResultSet rs = stmnt.executeQuery(); 
+        JSONArray result = new JSONArray();
+        while (rs.next()) { 
+            JSONObject obj = new JSONObject();
+            obj.put("id", rs.getInt(1));
+            obj.put("question", rs.getString(2)); 
+            obj.put("answer",rs.getString(3)); 
+            obj.put("category",rs.getString(4));
+            result.add(obj);
+        } 
+        stmnt.close();
+        return Response.status(HttpURLConnection.HTTP_OK).entity(result.toJSONString()).build();
+    } catch (Exception e) { 
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+        JSONObject result = new JSONObject(); 
+        result.put("error", e.toString()); 
+        result.put("trace", sw.toString());
+        return Response.status(HttpURLConnection.HTTP_INTERNAL_ERROR).entity(result.toJSONString()).build();
     }
-    return null;
   }
 
   /**
