@@ -155,7 +155,7 @@ public class FAQ extends RESTService {
     try {  
         JSONObject result = new JSONObject();
         
-        if(question.length>1){
+        if((String) data_JSON.get("question").length>1){
             Connection conn = service.dbm.getConnection();
             PreparedStatement stmnt = conn.prepareStatement("INSERT INTO faq  (question, answer, category) VALUES (?,?,?)");
             stmnt.setString(1,(String) data_JSON.get("question")); 
